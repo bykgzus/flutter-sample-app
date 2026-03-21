@@ -9,14 +9,19 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(loginProvider.notifier);
 
-    return Column(
-      children: [
-        TextField(onChanged: notifier.onEmailChanged),
-        ElevatedButton(
-          onPressed: () => notifier.login(),
-          child: Text('Login'),
-        )
-      ],
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(onChanged: notifier.onEmailChanged),
+            ElevatedButton(
+              onPressed: () => notifier.login(),
+              child: Text('Login'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
