@@ -41,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
+            Text('${state.userEmail} pushed the button this many times:'),
             Text(
               '${state.counter}',
               style: Theme.of(context).textTheme.headlineMedium,

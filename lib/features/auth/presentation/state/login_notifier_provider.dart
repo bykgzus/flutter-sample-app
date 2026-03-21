@@ -24,6 +24,10 @@ class LoginNotifier extends Notifier<LoginState> {
   void onEmailChanged(String email) {
     state = LoginState(email: email, password: state.password);
   }
+
+  void onPasswordChanged(String password) {
+    state = LoginState(email: state.email, password: password);
+  }
 }
 
 class LoginState {

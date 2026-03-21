@@ -11,15 +11,32 @@ class LoginScreen extends ConsumerWidget {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(onChanged: notifier.onEmailChanged),
-            ElevatedButton(
-              onPressed: () => notifier.login(),
-              child: Text('Login'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 16.0,
+            children: [
+              TextField(
+                onChanged: notifier.onEmailChanged,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                ),
+              ),
+              TextField(
+                onChanged: notifier.onPasswordChanged,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () => notifier.login(),
+                child: Text('Login'),
+              ),
+            ],
+          ),
         ),
       ),
     );
