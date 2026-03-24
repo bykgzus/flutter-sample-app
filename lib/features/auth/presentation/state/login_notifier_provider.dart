@@ -1,23 +1,33 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sample_app/features/auth/api/state/auth_notifier_provider.dart';
+import 'package:flutter_sample_app/features/auth/di/auth_providers.dart';
+import 'package:flutter_sample_app/features/auth/domain/usecase/login_usecase.dart';
+import 'package:flutter_sample_app/features/auth/presentation/state/login_error.dart';
 
 final loginProvider = NotifierProvider<LoginNotifier, LoginState>(
   () => LoginNotifier(),
 );
 
 class LoginNotifier extends Notifier<LoginState> {
-  late final AuthNotifier _authNotifier;
+  late final LoginUseCase _loginUseCase;
 
   @override
   LoginState build() {
-    _authNotifier = ref.read(authNotifierProvider.notifier);
+    _loginUseCase = ref.read(loginUseCaseProvider);
     return LoginState.initial();
   }
 
   Future<void> login() async {
-    await _authNotifier.login(
-      state.email,
-      state.password,
+    state = state.copyWith(isLoading: true, error: null);
+
+    final result = await _loginUseCase(state.email, state.password);
+
+    state = result.when(
+      success: (_) {
+        return state.copyWith(isLoading: false, error: null);
+      },
+      error: (failure) {
+        return state.copyWith(isLoading: false, error: mapFailure(failure));
+      },
     );
   }
 
@@ -33,14 +43,29 @@ class LoginNotifier extends Notifier<LoginState> {
 class LoginState {
   final String email;
   final String password;
+  final bool isLoading;
+  final LoginError? error;
 
   LoginState({
     required this.email,
     required this.password,
+    this.isLoading = false,
+    this.error,
   });
 
-  factory LoginState.initial() => LoginState(
-        email: '',
-        password: '',
-      );
+  factory LoginState.initial() => LoginState(email: '', password: '');
+
+  LoginState copyWith({
+    String? email,
+    String? password,
+    bool? isLoading,
+    LoginError? error,
+  }) {
+    return LoginState(
+      email: email ?? this.email,
+      password: password ?? this.password,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
 }

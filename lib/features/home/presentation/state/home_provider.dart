@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_sample_app/core/auth/auth_provider.dart';
+import 'package:flutter_sample_app/features/auth/api/state/session_provider.dart';
 
 final homeProvider = NotifierProvider<HomeNotifier, HomeState>(
   () => HomeNotifier(),
@@ -10,7 +10,7 @@ class HomeNotifier extends Notifier<HomeState> {
 
   @override
   HomeState build() {
-    _userEmail = ref.read(authStateProvider).user?.email;
+    _userEmail = ref.read(sessionProvider).user?.email;
     return HomeState.initial(_userEmail ?? 'Guest');
   }
 

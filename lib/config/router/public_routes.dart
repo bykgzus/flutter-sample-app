@@ -1,5 +1,5 @@
-const publicRouteNames = {
-  'login',
-  'register',
-  'reset-password',
+const publicRoutes = {
+  '/login',
+  '/register',
+  '/reset-password',
 };

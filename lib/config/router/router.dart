@@ -1,28 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sample_app/config/router/public_routes.dart';
-import 'package:flutter_sample_app/core/auth/auth_provider.dart';
+import 'package:flutter_sample_app/features/auth/api/state/session_provider.dart';
 import 'package:flutter_sample_app/features/auth/presentation/routes/auth_routes.dart';
 import 'package:flutter_sample_app/features/home/presentation/routes/home_routes.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouterProvider = Provider((ref) {
-  final authState = ref.watch(authStateProvider);
-  final routes = [
-    ...authRoutes,
-    ...homeRoutes,
-  ];
+  final authNotifier = ref.read(sessionProvider.notifier);
+  final routes = [...authRoutes, ...homeRoutes];
 
   return GoRouter(
     initialLocation: '/home',
+    refreshListenable: authNotifier,
     redirect: (context, state) {
-      final isLoggedIn = authState.isAuthenticated;
-      final isPublic = publicRouteNames.contains(state.name);
+      final session = ref.read(sessionProvider);
+      final isLoggedIn = session.isAuthenticated;
+      final isPublic = publicRoutes.contains(state.matchedLocation);
 
       if (!isLoggedIn && !isPublic) {
         return '/login';
       }
 
-      if (isLoggedIn && state.name == 'login') {
+      if (isLoggedIn && state.matchedLocation == '/login') {
         return '/home';
       }
 

@@ -1,3 +1,5 @@
+import 'package:flutter_sample_app/core/network/dio_exception_mapper.dart';
+import 'package:flutter_sample_app/core/result/result.dart';
 import 'package:flutter_sample_app/features/auth/data/data_source/auth_remote.dart';
 import 'package:flutter_sample_app/features/auth/domain/entity/user.dart';
 import 'package:flutter_sample_app/features/auth/domain/repository/auth_repository.dart';
@@ -8,7 +10,12 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.remote);
 
   @override
-  Future<User> login(String email, String password) {
-    return remote.login(email, password);
+  Future<Result<User>> login(String email, String password) async {
+    try {
+      final model = await remote.login(email, password);
+      return Success(model);
+    } catch (e) {
+      return Error(mapException(e));
+    }
   }
 }

@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sample_app/config/router/router.dart';
 import 'package:flutter_sample_app/config/theme.dart';
-import 'package:flutter_sample_app/core/auth/auth_provider.dart';
-import 'package:flutter_sample_app/features/auth/api/state/auth_notifier_provider.dart';
 
 void main() {
   runApp(
     ProviderScope(
-      overrides: [
-        authStateProvider.overrideWith((ref) {
-          return ref.watch(authNotifierProvider);
-        }),
-      ],
       child: MyApp(),
     ),
   );
