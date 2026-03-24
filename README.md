@@ -2,18 +2,11 @@
 
 A new Flutter project based on Clean Architecture with patterns to replicate in future projects.
 
-## Getting Started
+## How to collaborate
 
-This project is a starting point for a Flutter application.
+After cloning and installing this project, create a new branch from main.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Make your changes, commit them, push the branch and create a Pull Request to include it.
 
 ## Architecture
 
